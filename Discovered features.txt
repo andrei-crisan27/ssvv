@@ -1,0 +1,6 @@
+Features list:
+1.Introducere student - you can add a new student
+2.Stergere student - you can delete a student
+3.Cautare student - you can search a student
+4.Modificare student - you can edit a student
+5.Afisare lista studenti - you can display all students
