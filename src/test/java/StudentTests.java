@@ -69,14 +69,15 @@ public class StudentTests {
         //id student = 2 => it already exists => it shouldn't work, but it does => ERROR
         Student hwStudent2 = new Student("2", "Mihai", 1, "Mihai@mihai.com");
         Assertions.assertNotEquals(null, service.findStudent("2"));
-        Assertions.assertThrows(ValidationException.class, () ->{ service.addStudent(hwStudent2);});
+        service.addStudent(hwStudent2);
+        Assertions.assertNotEquals(hwStudent2, service.findStudent("2"));
     }
 
     @Test
     public void TestInvalidId(){
         //id student = a => it should throw an error, but it doesn't => ERROR
         Student hwStudent3 = new Student("a", "Michael", 1, "Michael@Jackson.mj");
-        Assertions.assertEquals(null, service.addStudent(hwStudent3));
+        Assertions.assertThrows(ValidationException.class, () ->{ service.addStudent(hwStudent3);});
     }
 
     @Test
@@ -97,14 +98,14 @@ public class StudentTests {
     public void TestNullName(){
         //try to add a student with a null name => it shouldn't work
         Student hwStudent6 = new Student("154", null, 1, "e@e.com");
-        Assertions.assertEquals(null, hwStudent6);
+        Assertions.assertThrows(ValidationException.class, () ->{ service.addStudent(hwStudent6);});
     }
 
     @Test
     public void TestInvalidName(){
         //try to add a student who has a name that is not valid(no letters)
         Student hwStudent7 = new Student("155", "910", 1, "e@e.com");
-        Assertions.assertEquals(null, service.addStudent(hwStudent7));
+        Assertions.assertThrows(ValidationException.class, () ->{ service.addStudent(hwStudent7);});
     }
 
     @Test
@@ -125,27 +126,27 @@ public class StudentTests {
     public void TestNumberEmail(){
         //try to add a student that has an email that contains only numbers
         Student hwStudent10 = new Student("158", "Michael", 1, "910");
-        Assertions.assertEquals(null, service.addStudent(hwStudent10));
+        Assertions.assertThrows(ValidationException.class, () ->{ service.addStudent(hwStudent10);});
     }
 
     @Test
     public void TestMinimumGroup(){
         //try to add a student with the lowest group
-        Student hwStudent11 = new Student("159", "Michael", 1, "910");
+        Student hwStudent11 = new Student("159", "Michael", 1, "910@email.com");
         Assertions.assertEquals(hwStudent11, service.addStudent(hwStudent11));
     }
 
     @Test
     public void TestMaximumGroup(){
         //try to add a student with a large number as group
-        Student hwStudent12 = new Student("160", "Michael", 1000000000, "910");
+        Student hwStudent12 = new Student("160", "Michael", 1000000000, "910@email.com");
         Assertions.assertEquals(hwStudent12, service.addStudent(hwStudent12));
     }
 
     @Test
     public void TestRandomGroup(){
         //choose a random group number(not generated)
-        Student hwStudent13 = new Student("160", "Michael", 123, "910");
+        Student hwStudent13 = new Student("160", "Michael", 123, "910@email.com");
         Assertions.assertEquals(hwStudent13, service.addStudent(hwStudent13));
     }
 
